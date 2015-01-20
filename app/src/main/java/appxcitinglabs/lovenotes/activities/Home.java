@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.TextView;
 
 import appxcitinglabs.lovenotes.fragments.NavigationDrawerFragment;
 import appxcitinglabs.lovenotes.R;
@@ -34,6 +35,10 @@ public class Home extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        TextView sqlTxt = (TextView) findViewById(R.id.sqlInsert);
+        sqlTxt.setText("Sql: " + getText(R.string.DB_CREATE_LOVENOTES_TABLE));
+
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
