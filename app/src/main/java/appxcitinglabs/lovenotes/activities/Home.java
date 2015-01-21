@@ -1,25 +1,21 @@
 package appxcitinglabs.lovenotes.activities;
 
-import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.TextView;
 
-import appxcitinglabs.lovenotes.fragments.NavigationDrawerFragment;
 import appxcitinglabs.lovenotes.R;
+import appxcitinglabs.lovenotes.fragments.NavigationDrawerFragment;
+import appxcitinglabs.lovenotes.fragments.NotesListFragment;
 
 
 public class Home extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, NotesListFragment.OnFragmentInteractionListener {
+
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -36,10 +32,6 @@ public class Home extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        TextView sqlTxt = (TextView) findViewById(R.id.sqlInsert);
-        sqlTxt.setText("Sql: " + getText(R.string.DB_CREATE_LOVENOTES_TABLE));
-
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -52,10 +44,12 @@ public class Home extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+
+        //Toast.makeText(Home.this, "on Navigation Item Selected", Toast.LENGTH_LONG).show();
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, NotesListFragment.newInstance(new String("ABC"), new String("DEF")))
                 .commit();
     }
 
@@ -69,6 +63,9 @@ public class Home extends ActionBarActivity
                 break;
             case 3:
                 mTitle = getString(R.string.title_oldNotes);
+                break;
+            case 4:
+                mTitle = "About App";
                 break;
         }
     }
@@ -109,20 +106,28 @@ public class Home extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onFragmentInteraction(String id) {
+
+    }
+
+
     /**
      * A placeholder fragment containing a simple view.
      */
+
+    /*
     public static class PlaceholderFragment extends Fragment {
-        /**
+        *//**
          * The fragment argument representing the section number for this
          * fragment.
-         */
+         *//*
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
+        *//**
          * Returns a new instance of this fragment for the given section
          * number.
-         */
+         *//*
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -137,7 +142,12 @@ public class Home extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+            int test = getArguments().getInt(ARG_SECTION_NUMBER);
+            Toast.makeText(rootView.getContext(), "Test: " + test, Toast.LENGTH_LONG);
+
             return rootView;
         }
 
@@ -148,5 +158,5 @@ public class Home extends ActionBarActivity
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
-
+*/
 }

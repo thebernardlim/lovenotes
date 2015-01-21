@@ -201,6 +201,8 @@ public class NavigationDrawerFragment extends Fragment {
         if (mCallbacks != null) {
             mCallbacks.onNavigationDrawerItemSelected(position);
         }
+
+        //Toast.makeText(this.getActivity(), "Select Item" , Toast.LENGTH_LONG).show();
     }
 
     @Override
