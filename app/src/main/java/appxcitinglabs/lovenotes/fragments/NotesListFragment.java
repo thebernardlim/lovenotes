@@ -1,8 +1,9 @@
 package appxcitinglabs.lovenotes.fragments;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import appxcitinglabs.lovenotes.R;
-
+import appxcitinglabs.lovenotes.activities.LoveNoteActivity;
 import appxcitinglabs.lovenotes.fragments.dummy.DummyContent;
 
 /**
@@ -78,6 +80,7 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+
     }
 
     @Override
@@ -92,8 +95,14 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
+        //Output string here
+        //TextView txtTest = (TextView) view.findViewById(R.id.txtTest);
+        //txtTest.setText(mParam1);
+
         return view;
     }
+
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -118,7 +127,23 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
+            Toast.makeText(getView().getContext(), id + " selected", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity().getBaseContext(), "ID: " + String.valueOf(id), Toast.LENGTH_LONG);
+
+            switch ((int) id)
+            {
+                case 1:
+                    Intent intent = new Intent(getView().getContext(), LoveNoteActivity.class);
+                    intent.putExtra("noteID", id);
+                    startActivity(intent);
+                    break;
+                default:
+                    break;
+            }
+
             mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+
+            //FragmentTransaction fragmentTransaction =
         }
     }
 

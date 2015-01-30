@@ -20,7 +20,8 @@ public class Home extends ActionBarActivity
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    protected NavigationDrawerFragment mNavigationDrawerFragment;
+    protected DrawerLayout mDrawerLayout;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -36,10 +37,12 @@ public class Home extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                mDrawerLayout);
     }
 
     @Override
@@ -47,10 +50,23 @@ public class Home extends ActionBarActivity
 
         //Toast.makeText(Home.this, "on Navigation Item Selected", Toast.LENGTH_LONG).show();
         // update the main content by replacing fragments
+
+        //Replace with different fragments here
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, NotesListFragment.newInstance(new String("ABC"), new String("DEF")))
-                .commit();
+        if (position == 1)
+        {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, NotesListFragment.newInstance(new String("ABC"), new String("DEF")))
+                    .commit();
+        }
+        else
+        {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, NotesListFragment.newInstance(new String("ZZZ"), new String("YYY")))
+                    .commit();
+        }
+
+
     }
 
     public void onSectionAttached(int number) {
