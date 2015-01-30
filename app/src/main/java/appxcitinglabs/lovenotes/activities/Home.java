@@ -9,12 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import appxcitinglabs.lovenotes.R;
+import appxcitinglabs.lovenotes.fragments.AboutFragment;
 import appxcitinglabs.lovenotes.fragments.NavigationDrawerFragment;
 import appxcitinglabs.lovenotes.fragments.NotesListFragment;
 
 
 public class Home extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, NotesListFragment.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, NotesListFragment.OnFragmentInteractionListener, AboutFragment.OnFragmentInteractionListener {
 
 
     /**
@@ -53,10 +54,10 @@ public class Home extends ActionBarActivity
 
         //Replace with different fragments here
         FragmentManager fragmentManager = getFragmentManager();
-        if (position == 1)
+        if (position == 0)
         {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, NotesListFragment.newInstance(new String("ABC"), new String("DEF")))
+                    .replace(R.id.container, AboutFragment.newInstance(new String("ABC"), new String("DEF")))
                     .commit();
         }
         else
