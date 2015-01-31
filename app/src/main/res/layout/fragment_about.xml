@@ -1,37 +1,39 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
     tools:context="appxcitinglabs.lovenotes.fragments.AboutFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/aboutPageTitle"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:background="@drawable/test"
-        android:tint="#fff3ff3a" />
+        android:id="@+id/imageView" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:id="@+id/scrollView"
+        android:background="@drawable/note_backgrd"
+        >
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/aboutPageTitle"
-            android:id="@+id/textView"
-            android:layout_gravity="center_horizontal"
-        />
-
-
-
-        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_margin="40px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="@string/aboutPageMsg"
-            android:backgroundTintMode="src_in"
-            style="@style/Base.V21.Theme.AppCompat"
-            android:textColor="#ffffa633"
-            android:textColorHighlight="#ffffec80" />
+            
+            android:textColor="@android:color/darker_gray"
+            />
 
-    </LinearLayout>
-</FrameLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import appxcitinglabs.lovenotes.R;
 import appxcitinglabs.lovenotes.activities.LoveNoteActivity;
+import appxcitinglabs.lovenotes.adapters.SingleItemAdapter;
 import appxcitinglabs.lovenotes.fragments.dummy.DummyContent;
 
 /**
@@ -37,6 +38,36 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    String[] txtList = {
+            "Week 1",
+            "Week 2",
+            "Week 3",
+            "Week 4",
+            "Week 5",
+            "Week 6",
+            "Week 1",
+            "Week 2",
+            "Week 3",
+            "Week 4",
+            "Week 5",
+            "Week 6"
+    };
+
+    Integer[] imageID = {
+            R.drawable.list_item_1_hor,
+            R.drawable.list_item_2_hor,
+            R.drawable.list_item_3_hor,
+            R.drawable.list_item_4_hor,
+            R.drawable.list_item_5_hor,
+            R.drawable.list_item_4_hor,
+            R.drawable.list_item_3_hor,
+            R.drawable.list_item_2_hor,
+            R.drawable.list_item_1_hor,
+            R.drawable.list_item_2_hor,
+            R.drawable.list_item_3_hor,
+            R.drawable.list_item_4_hor
+    };
 
     private OnFragmentInteractionListener mListener;
 
@@ -90,7 +121,10 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        //((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+
+        SingleItemAdapter adapter = new SingleItemAdapter(getActivity(), txtList, imageID);
+        mListView.setAdapter(adapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);

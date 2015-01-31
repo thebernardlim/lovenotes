@@ -7,8 +7,4 @@
     <ListView android:id="@android:id/list" android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 
-    <TextView android:id="@+id/txtTest" android:layout_width="wrap_content"
-        android:layout_height="match_parent" android:gravity="center" android:text="HEY" />
-
-
 </FrameLayout>

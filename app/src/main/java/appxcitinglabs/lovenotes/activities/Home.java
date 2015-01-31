@@ -10,12 +10,16 @@ import android.view.MenuItem;
 
 import appxcitinglabs.lovenotes.R;
 import appxcitinglabs.lovenotes.fragments.AboutFragment;
+import appxcitinglabs.lovenotes.fragments.HomeFragment;
 import appxcitinglabs.lovenotes.fragments.NavigationDrawerFragment;
 import appxcitinglabs.lovenotes.fragments.NotesListFragment;
 
 
 public class Home extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, NotesListFragment.OnFragmentInteractionListener, AboutFragment.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        HomeFragment.OnFragmentInteractionListener,
+        NotesListFragment.OnFragmentInteractionListener,
+        AboutFragment.OnFragmentInteractionListener {
 
 
     /**
@@ -57,13 +61,19 @@ public class Home extends ActionBarActivity
         if (position == 0)
         {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, AboutFragment.newInstance(new String("ABC"), new String("DEF")))
+                    .replace(R.id.container, HomeFragment.newInstance(new String("ZZZ"), new String("YYY")))
                     .commit();
         }
-        else
+        else if (position == 1)
         {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, NotesListFragment.newInstance(new String("ZZZ"), new String("YYY")))
+                    .commit();
+        }
+        else if (position == 2)
+        {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, AboutFragment.newInstance(new String("ABC"), new String("DEF")))
                     .commit();
         }
 
@@ -79,10 +89,7 @@ public class Home extends ActionBarActivity
                 mTitle = getString(R.string.title_newNotes);
                 break;
             case 3:
-                mTitle = getString(R.string.title_oldNotes);
-                break;
-            case 4:
-                mTitle = "About App";
+                mTitle = getString(R.string.title_aboutapp);
                 break;
         }
     }
