@@ -9,3 +9,4 @@ config.xml
 *.png
 strings.xml
 drawable/
+drawable-hdpi/
