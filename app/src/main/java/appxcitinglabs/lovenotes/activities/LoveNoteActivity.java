@@ -1,28 +1,38 @@
 package appxcitinglabs.lovenotes.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.TextView;
 
 import appxcitinglabs.lovenotes.R;
 
 public class LoveNoteActivity extends ActionBarActivity {
 
+    String note = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View contentView = inflater.inflate(R.layout.activity_love_note, null, false);
-
-        //mDrawerLayout.addView(contentView, 0);
-
+        //LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //View contentView = inflater.inflate(R.layout.activity_love_note, null, false);
 
         setContentView(R.layout.activity_love_note);
+
+        Bundle extras = getIntent().getExtras();
+        note = extras.getString("notes");
+        //args.putString(ARG_PARAM2, param2);
+
+        TextView txtLoveNote = (TextView) findViewById(R.id.txtLoveNote);
+        txtLoveNote.setText(note);
+
+        System.out.println("Notes here : " + note );
+
+
+
+
     }
 
 

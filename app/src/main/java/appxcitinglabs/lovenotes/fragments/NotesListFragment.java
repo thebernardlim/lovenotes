@@ -3,21 +3,33 @@ package appxcitinglabs.lovenotes.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import appxcitinglabs.lovenotes.R;
 import appxcitinglabs.lovenotes.activities.LoveNoteActivity;
 import appxcitinglabs.lovenotes.adapters.SingleItemAdapter;
+import appxcitinglabs.lovenotes.classes.Note;
 import appxcitinglabs.lovenotes.fragments.dummy.DummyContent;
+import appxcitinglabs.lovenotes.helpers.DatabaseHelper;
 
 /**
  * A fragment representing a list of Items.
@@ -38,6 +50,8 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ArrayList<Note> noteList;
 
     String[] txtList = {
             "Week 1",
@@ -108,10 +122,71 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        PopulateNoteList();
 
+
+        // TODO: Change Adapter to display your content
+        //mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+        //        android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+
+    }
+
+    private void PopulateNoteList()
+    {
+        DatabaseHelper myDBHelper  = new DatabaseHelper(this.getActivity());
+        try
+        {
+            myDBHelper.createDatabase();
+        }
+        catch(IOException ioe){
+            throw new Error("Unable to create database");
+        }
+
+        try{
+            myDBHelper.openDatabase();
+            noteList = new ArrayList<Note>();
+
+            Cursor c = myDBHelper.GetAllNotes();
+            if (c.moveToFirst()) {
+                do {
+                    try
+                    {
+                        Note note = new Note();
+
+                        note.setWeekNo(c.getInt(c.getColumnIndex("week_no")));
+
+                        //Note
+                        note.setNote(c.getString(c.getColumnIndex("notes")));
+
+                        //Date inteprets month wrongly
+
+
+
+                        //Date Activate
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");//,Locale.getDefault());
+                        String date = c.getString(c.getColumnIndex("activate_date"));
+                        note.setDateActivate(dateFormat.parse(date));
+
+
+                        //Boolean
+                        boolean activated = c.getInt(c.getColumnIndex("activated")) != 0;
+                        note.setActivated(activated);
+
+                        noteList.add(note);
+
+                        //System.out.println("NOTE : " + note + " DATE: " + dateActivate.toString() + " ACTIVATED: " + activated);
+                    }
+                    catch(Exception ex)
+                    {
+                        throw new Error("Error querying database. Message: " + ex.getLocalizedMessage());
+                    }
+
+                } while (c.moveToNext());
+            }
+        }
+        catch(SQLiteException sqle){
+            throw sqle;
+        }
     }
 
     @Override
@@ -123,7 +198,7 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         //((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
-        SingleItemAdapter adapter = new SingleItemAdapter(getActivity(), txtList, imageID);
+        SingleItemAdapter adapter = new SingleItemAdapter(getActivity(), noteList); // txtList, imageID);
         mListView.setAdapter(adapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
@@ -161,23 +236,32 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            Toast.makeText(getView().getContext(), id + " selected", Toast.LENGTH_LONG).show();
-            //Toast.makeText(getActivity().getBaseContext(), "ID: " + String.valueOf(id), Toast.LENGTH_LONG);
 
-            switch ((int) id)
+            Note currentNote = noteList.get(position);
+
+            Date dateActivate = currentNote.getDateActivate();
+            DateTime jodaDtActivate = new DateTime(dateActivate);
+            DateTime jodaDtCurrent = new DateTime();
+
+            int days = Days.daysBetween(jodaDtCurrent, jodaDtActivate).getDays();
+            System.err.println("Days Difference: " + days);
+
+            boolean activated = currentNote.isActivated();
+            if (activated)
             {
-                case 1:
-                    Intent intent = new Intent(getView().getContext(), LoveNoteActivity.class);
-                    intent.putExtra("noteID", id);
-                    startActivity(intent);
-                    break;
-                default:
-                    break;
+                Intent intent = new Intent(getView().getContext(), LoveNoteActivity.class);
+                intent.putExtra("noteID", currentNote.getWeekNo());
+                intent.putExtra("notes", currentNote.getNote());
+
+                startActivity(intent);
+            }
+            else
+            {
+                Toast.makeText(getView().getContext(), String.format(getString(R.string.loveNoteUnactivated), days), Toast.LENGTH_SHORT).show();
             }
 
             mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
 
-            //FragmentTransaction fragmentTransaction =
         }
     }
 

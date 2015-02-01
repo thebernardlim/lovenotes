@@ -8,25 +8,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 
 import appxcitinglabs.lovenotes.R;
+import appxcitinglabs.lovenotes.classes.Note;
 
 /**
  * Created by Bernard on 2/1/2015.
  */
-public class SingleItemAdapter extends ArrayAdapter<String> {
+public class SingleItemAdapter extends ArrayAdapter<Note> {
 
     private final Activity context;
-    private final String[] textList;
-    private final Integer[] imageID;
+    private final ArrayList<Note> noteList;
 
-    public SingleItemAdapter(Activity context, String[] textList, Integer[] imageID)
+    public SingleItemAdapter(Activity context, ArrayList<Note> noteList)
     {
-        super(context, R.layout.noteslistfragment_item_list, textList);
+        super(context, R.layout.noteslistfragment_item_list, noteList);
         this.context = context;
-        this.textList = textList;
-        this.imageID = imageID;
+        this.noteList = noteList;
     }
 
     public View getView(int position, View view, ViewGroup parent)
@@ -35,9 +34,14 @@ public class SingleItemAdapter extends ArrayAdapter<String> {
         View rowView = inflater.inflate(R.layout.noteslistfragment_singleitem, null, true);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
-        txtTitle.setText(textList[position]);
 
-        Picasso.with(context).load(imageID[position]).into(imageView);
+        Note currNote = noteList.get(position);
+        boolean activated = currNote.isActivated();
+        String ttl = "Week " + currNote.getWeekNo() + ((!activated) ? "[Locked]" : "");
+        txtTitle.setText(ttl);
+
+
+        //Picasso.with(context).load(imageID[position]).into(imageView);
 
         //imageView.setImageResource(imageID[position]);
         return rowView;
