@@ -1,5 +1,6 @@
 package appxcitinglabs.lovenotes.activities;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -11,10 +12,13 @@ import appxcitinglabs.lovenotes.R;
 public class LoveNoteActivity extends ActionBarActivity {
 
     String note = "";
+    int noteID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         //LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //View contentView = inflater.inflate(R.layout.activity_love_note, null, false);
@@ -23,10 +27,15 @@ public class LoveNoteActivity extends ActionBarActivity {
 
         Bundle extras = getIntent().getExtras();
         note = extras.getString("notes");
-        //args.putString(ARG_PARAM2, param2);
+        noteID = extras.getInt("noteID");
+
+        setTitle("Love Note #" + noteID);
 
         TextView txtLoveNote = (TextView) findViewById(R.id.txtLoveNote);
         txtLoveNote.setText(note);
+
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/JosefinSans-Regular.ttf");
+        txtLoveNote.setTypeface(tf);
 
         System.out.println("Notes here : " + note );
 

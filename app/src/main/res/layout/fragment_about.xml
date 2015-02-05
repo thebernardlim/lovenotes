@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:background="@color/lightpink"
     tools:context="appxcitinglabs.lovenotes.fragments.AboutFragment">
 
     <TextView
@@ -30,8 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/aboutPageMsg"
-
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/white"
             />
 
     </ScrollView>

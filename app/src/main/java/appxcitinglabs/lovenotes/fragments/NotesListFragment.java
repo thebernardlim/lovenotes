@@ -13,7 +13,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -68,20 +67,7 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
             "Week 6"
     };
 
-    Integer[] imageID = {
-            R.drawable.list_item_1_hor,
-            R.drawable.list_item_2_hor,
-            R.drawable.list_item_3_hor,
-            R.drawable.list_item_4_hor,
-            R.drawable.list_item_5_hor,
-            R.drawable.list_item_4_hor,
-            R.drawable.list_item_3_hor,
-            R.drawable.list_item_2_hor,
-            R.drawable.list_item_1_hor,
-            R.drawable.list_item_2_hor,
-            R.drawable.list_item_3_hor,
-            R.drawable.list_item_4_hor
-    };
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -246,6 +232,17 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
             int days = Days.daysBetween(jodaDtCurrent, jodaDtActivate).getDays();
             System.err.println("Days Difference: " + days);
 
+            //ImageView imgLoveNote = (ImageView) view.findViewById(R.id.imgLoveNote);
+            //Picasso.with(view.getContext()).load(R.drawable.list_item_4_hor).into(imgLoveNote);
+
+            Intent intent = new Intent(getView().getContext(), LoveNoteActivity.class);
+            intent.putExtra("noteID", currentNote.getWeekNo());
+            intent.putExtra("notes", currentNote.getNote());
+
+            startActivity(intent);
+
+            /*
+
             boolean activated = currentNote.isActivated();
             if (activated)
             {
@@ -259,6 +256,7 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
             {
                 Toast.makeText(getView().getContext(), String.format(getString(R.string.loveNoteUnactivated), days), Toast.LENGTH_SHORT).show();
             }
+            */
 
             mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
 

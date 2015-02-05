@@ -2,10 +2,12 @@ package appxcitinglabs.lovenotes.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import appxcitinglabs.lovenotes.R;
 
@@ -58,12 +60,23 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+        TextView txtHomeTitle = (TextView) v.findViewById(R.id.txtHomeTitle);
+        txtHomeTitle.setText(R.string.homePageTitle);
+
+        Typeface tf = Typeface.createFromAsset(v.getContext().getAssets(), "fonts/JosefinSans-Regular.ttf");
+        txtHomeTitle.setTypeface(tf);
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
