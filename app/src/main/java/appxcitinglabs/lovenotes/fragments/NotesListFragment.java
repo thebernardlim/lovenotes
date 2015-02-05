@@ -27,7 +27,6 @@ import appxcitinglabs.lovenotes.R;
 import appxcitinglabs.lovenotes.activities.LoveNoteActivity;
 import appxcitinglabs.lovenotes.adapters.SingleItemAdapter;
 import appxcitinglabs.lovenotes.classes.Note;
-import appxcitinglabs.lovenotes.fragments.dummy.DummyContent;
 import appxcitinglabs.lovenotes.helpers.DatabaseHelper;
 
 /**
@@ -241,6 +240,8 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
 
             startActivity(intent);
 
+            mListener.onFragmentInteraction("");
+
             /*
 
             boolean activated = currentNote.isActivated();
@@ -258,7 +259,7 @@ public class NotesListFragment extends Fragment implements AbsListView.OnItemCli
             }
             */
 
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+
 
         }
     }
